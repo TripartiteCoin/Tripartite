@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game: Guess the Number</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f0f0f0;
+        }
+
+        input, button {
+            font-size: 18px;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guess the Number!</h1>
+    <p>Guess a number between 1 and 100.</p>
+    <input type="number" id="guess" placeholder="Enter your guess" min="1" max="100"/>
+    <button onclick="checkGuess()">Submit Guess</button>
+    <p id="result"></p>
+
+    <script>
+        // Number to guess (randomly generated)
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        // Function to check the user's guess
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById("guess").value);
+            attempts++;
+
+            // Check if the input is a valid number
+            if (isNaN(userGuess)  userGuess < 1  userGuess > 100) {
+                document.getElementById("result").textContent = "Please enter a valid number between 1 and 100.";
+                return;
+            }
+
+            // Compare the guess to the secret number
+            if (userGuess < secretNumber) {
+                document.getElementById("result").textContent = "Try a higher number!";
+            } else if (userGuess > secretNumber) {
+                document.getElementById("result").textContent = "Try a lower number!";
+            } else {
+                document.getElementById("result").textContent = Congratulations! You guessed the number in ${attempts} attempts.;
+                secretNumber = Math.floor(Math.random() * 100) + 1;  // Generate a new number for the next round
+                attempts = 0; // Reset attempts for the next round
+            }
+        }
+    </script>
+</body>
+</html>
