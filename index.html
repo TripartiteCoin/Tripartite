@@ -1,64 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game: Guess the Number</title>
+    <title>مینی گیم تلگرام</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin-top: 50px;
+            padding: 20px;
             background-color: #f0f0f0;
         }
-
-        input, button {
-            font-size: 18px;
-            padding: 10px;
-            margin: 10px;
+        .game-container {
+            margin-top: 50px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-
-        #result {
+        .btn {
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        #score {
+            margin-top: 20px;
             font-size: 20px;
             font-weight: bold;
-            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Guess the Number!</h1>
-    <p>Guess a number between 1 and 100.</p>
-    <input type="number" id="guess" placeholder="Enter your guess" min="1" max="100"/>
-    <button onclick="checkGuess()">Submit Guess</button>
-    <p id="result"></p>
+    <h1>خوش آمدید به مینی گیم تلگرام</h1>
+    <div class="game-container">
+        <h2>فاز فعلی بازی: فاز اول</h2>
+        <button class="btn" id="playButton">شروع بازی</button>
+        <div id="score"></div>
+    </div>
 
     <script>
-        // Number to guess (randomly generated)
-        let secretNumber = Math.floor(Math.random() * 100) + 1;
-        let attempts = 0;
-
-        // Function to check the user's guess
-        function checkGuess() {
-            const userGuess = parseInt(document.getElementById("guess").value);
-            attempts++;
-
-            // Check if the input is a valid number
-            if (isNaN(userGuess)  userGuess < 1  userGuess > 100) {
-                document.getElementById("result").textContent = "Please enter a valid number between 1 and 100.";
-                return;
-            }
-
-            // Compare the guess to the secret number
-            if (userGuess < secretNumber) {
-                document.getElementById("result").textContent = "Try a higher number!";
-            } else if (userGuess > secretNumber) {
-                document.getElementById("result").textContent = "Try a lower number!";
-            } else {
-                document.getElementById("result").textContent = Congratulations! You guessed the number in ${attempts} attempts.;
-                secretNumber = Math.floor(Math.random() * 100) + 1;  // Generate a new number for the next round
-                attempts = 0; // Reset attempts for the next round
-            }
+        // تغییر فاز بر اساس ساعت نیویورک
+        function getPhase() {
+            const now = new Date();
+            const hour = now.getUTCHours() - 5; // نیویورک 5 ساعت عقب‌تر از UTC است
+            if (hour >= 0 && hour < 7) return 1; // فاز اول
+            if (hour >= 7 && hour < 14) return 2; // فاز دوم
+            return 3; // فاز سوم
         }
+
+        // تنظیم فاز بازی
+        const phase = getPhase();
+        document.querySelector('h2').innerHTML = فاز فعلی بازی: فاز ${phase};
+
+        // تابع شروع بازی
+        document.getElementById('playButton').onclick = function() {
+            const score = phase === 1 ? 100 : (phase === 2 ? 200 : 300);
+            document.getElementById('score').innerHTML = امتیاز شما: ${score};
+        };
     </script>
 </body>
 </html>
