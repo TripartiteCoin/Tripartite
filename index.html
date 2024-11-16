@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مینی گیم تلگرام</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .game-container {
+            margin-top: 50px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn {
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        #score {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #nextButton {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>خوش آمدید به مینی گیم تلگرام</h1>
+    <div class="game-container">
+        <h2>فاز فعلی بازی: فاز اول</h2>
+        <button class="btn" id="playButton">شروع بازی</button>
+        <button class="btn" id="nextButton">مرحله بعد</button>
+        <div id="score"></div>
+    </div>
+
+    <script>
+        // تغییر فاز بر اساس ساعت نیویورک
+        function getPhase() {
+            const now = new Date();
+            const hour = now.getUTCHours() - 5; // نیویورک 5 ساعت عقب‌تر از UTC است
+            if (hour >= 0 && hour < 7) return 1; // فاز اول
+            if (hour >= 7 && hour < 14) return 2; // فاز دوم
+            return 3; // فاز سوم
+        }
+
+        // تنظیم فاز بازی
+        const phase = getPhase();
+        document.querySelector('h2').innerHTML = فاز فعلی بازی: فاز ${phase};
+
+        // تابع شروع بازی
+        document.getElementById('playButton').onclick = function() {
+            // مخفی کردن دکمه "شروع بازی"
+            document.getElementById('playButton').style.display = 'none';
+
+            // نمایش دکمه "مرحله بعد"
+            document.getElementById('nextButton').style.display = 'block';
+
+            // نمایش امتیاز بر اساس فاز
+            const score = phase === 1 ? 100 : (phase === 2 ? 200 : 300);
+            document.getElementById('score').innerHTML = امتیاز شما: ${score};
+        };
+
+        // تابع مرحله بعد
+        document.getElementById('nextButton').onclick = function() {
+            alert("شما به مرحله بعدی وارد شدید!");
+            // می‌توانید اینجا کدهایی برای تغییر صفحه یا ارسال اطلاعات به سرور اضافه کنید
+        };
+    </script>
+</body>
+</html>
